@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(vkAcntMonitor5 VERSION 2.7 LANGUAGES CXX)
+project(vkAcntMonitor5 VERSION 2.7.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -15,9 +15,9 @@ qt_add_executable(appvkAcntMonitor5
 
 qt_add_qml_module(appvkAcntMonitor5
     URI vkAcntMonitor5
-    VERSION 2.7
+    VERSION 2.7.1
     QML_FILES qt/qml/Main.qml qt/qml/VkAcntAmnt.qml qt/qml/VkReloadBtn.qml qt/qml/WebDocum.qml lib.js
-    RESOURCES README.md
+    RESOURCES README.md .gitignore
     # RESOURCES icon/reload.svg
 )
 qt_add_resources(appvkAcntMonitor5 "app_icons"
