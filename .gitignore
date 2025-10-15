@@ -1,6 +1,7 @@
 # vkAcntMonitor
 
 # misc
+.CMakeLists.txt.user
 *DS_Store
 .env
 .env.local
