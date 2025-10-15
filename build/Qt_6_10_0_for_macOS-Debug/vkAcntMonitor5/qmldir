@@ -1,0 +1,12 @@
+module vkAcntMonitor5
+typeinfo appvkAcntMonitor5.qmltypes
+prefer :/vkAcntMonitor5/
+Main 6.0 qt/qml/Main.qml
+ModelAcnt 6.0 qt/qml/ModelAcnt.qml
+VkAcntAmnt 6.0 qt/qml/VkAcntAmnt.qml
+VkReloadBtn 6.0 qt/qml/VkReloadBtn.qml
+ModelDcms 6.0 qt/qml/ModelDcms.qml
+LogView 6.0 qt/qml/LogView.qml
+WebDocum 6.0 qt/qml/WebDocum.qml
+depends QtQuick
+

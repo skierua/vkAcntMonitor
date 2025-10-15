@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="/vkAcntMonitor5/">
+    <file alias="README.md">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/README.md</file>
+    <file alias=".gitignore">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/.gitignore</file>
+  </qresource>
+</RCC>
+

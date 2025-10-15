@@ -39,14 +39,22 @@ function postRequest(url, req, callback) {
 
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
-            let response = {
-                status : request.status,
-                headers : request.getAllResponseHeaders(),
-                contentType : request.responseType,
-                content : request.response
-            };
+            // log( "responseType="+request.responseType )
+            // log( "response="+request.response )
+            let err = null, resp = null;
+            if (request.status === 200) {
+                let isPlainText = request.responseType === ''
+                let presp = parse(request.response)
+                if (isPlainText && presp) {
+                    resp = presp.rslt
+                }
+            } else if (request.status === 0){
+                err = {text:'Site connection error', code:'EE'}
+            } else {
+                err = {text:"URL: "+ url + "\nRequest: "+JSON.stringify(req)+"\nResponse: "+request.response, code: 'EE'}
+            }
 
-            callback(response);
+            callback(err, resp);
         }
     }
     request.open("POST", url);
@@ -55,29 +63,6 @@ function postRequest(url, req, callback) {
     request.setRequestHeader("Accept","application/json");
     // request.setRequestHeader("Bearer",token);
     // request.send("data=" + Qt.btoa(JSON.stringify(req)));
-    request.send("data=" + JSON.stringify(req));
-}
-
-function old_postRequest(url, req, token, callback) {
-    let request = new XMLHttpRequest();
-
-    request.onreadystatechange = function() {
-        if (request.readyState === XMLHttpRequest.DONE) {
-            let response = {
-                status : request.status,
-                headers : request.getAllResponseHeaders(),
-                contentType : request.responseType,
-                content : request.response
-            };
-
-            callback(response);
-        }
-    }
-    request.open("POST", url);
-    request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    // request.setRequestHeader("Content-Type","multipart/form-data");
-    request.setRequestHeader("Accept","application/json");
-    // request.setRequestHeader("Bearer",token);
     request.send("data=" + JSON.stringify(req));
 }
 

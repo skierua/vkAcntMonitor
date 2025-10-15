@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="icon/reload.svg">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/icon/reload.svg</file>
+  </qresource>
+</RCC>
+

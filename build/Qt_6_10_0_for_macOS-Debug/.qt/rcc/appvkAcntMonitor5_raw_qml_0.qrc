@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="/vkAcntMonitor5/">
+    <file alias="qt/qml/Main.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/Main.qml</file>
+    <file alias="qt/qml/ModelAcnt.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/ModelAcnt.qml</file>
+    <file alias="qt/qml/VkAcntAmnt.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/VkAcntAmnt.qml</file>
+    <file alias="qt/qml/VkReloadBtn.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/VkReloadBtn.qml</file>
+    <file alias="qt/qml/ModelDcms.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/ModelDcms.qml</file>
+    <file alias="qt/qml/LogView.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/LogView.qml</file>
+    <file alias="qt/qml/WebDocum.qml">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/qt/qml/WebDocum.qml</file>
+    <file alias="lib.js">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/lib.js</file>
+  </qresource>
+</RCC>
+
