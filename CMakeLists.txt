@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
-project(vkAcntMonitor5 VERSION 2.7.1 LANGUAGES CXX)
+project(vkAcntMonitor5 VERSION 6.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
-find_package(Qt6 6.4 REQUIRED COMPONENTS QuickControls2)
+find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS QuickControls2)
 
 qt_standard_project_setup()
 
@@ -15,8 +15,15 @@ qt_add_executable(appvkAcntMonitor5
 
 qt_add_qml_module(appvkAcntMonitor5
     URI vkAcntMonitor5
-    VERSION 2.7.1
-    QML_FILES qt/qml/Main.qml qt/qml/VkAcntAmnt.qml qt/qml/VkReloadBtn.qml qt/qml/WebDocum.qml lib.js
+    VERSION 6.0
+    QML_FILES qt/qml/Main.qml
+        qt/qml/ModelAcnt.qml
+        qt/qml/VkAcntAmnt.qml
+        qt/qml/VkReloadBtn.qml
+        qt/qml/ModelDcms.qml
+        qt/qml/LogView.qml
+        qt/qml/WebDocum.qml
+        lib.js
     RESOURCES README.md .gitignore
     # RESOURCES icon/reload.svg
 )
@@ -37,7 +44,8 @@ set_target_properties(appvkAcntMonitor5 PROPERTIES
 )
 
 target_link_libraries(appvkAcntMonitor5
-    PRIVATE Qt6::Quick
+    PRIVATE Qt${QT_VERSION_MAJOR}::QuickControls2
+    PRIVATE Qt${QT_VERSION_MAJOR}::Quick
 )
 
 include(GNUInstallDirs)

@@ -1,5 +1,6 @@
 import QtQuick
-import QtQuick.Controls.Fusion
+import QtQuick.Controls
+// import QtQuick.Controls.Fusion
 
 ToolButton {
     id: root
