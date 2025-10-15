@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/vkAcntMonitor5">
-    <file alias="qmldir">/Users/iv/sandbox/vkeeper/vkAcntMonitor5/build/Qt_6_10_0_for_macOS-Debug/vkAcntMonitor5/qmldir</file>
-  </qresource>
-</RCC>
-
