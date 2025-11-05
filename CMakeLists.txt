@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(vkAcntMonitor5 VERSION 6.0 LANGUAGES CXX)
+project(vkAcntMonitor5 VERSION 6.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -15,7 +15,7 @@ qt_add_executable(appvkAcntMonitor5
 
 qt_add_qml_module(appvkAcntMonitor5
     URI vkAcntMonitor5
-    VERSION 6.0
+    VERSION 6.1
     QML_FILES qt/qml/Main.qml
         qt/qml/ModelAcnt.qml
         qt/qml/VkAcntAmnt.qml
