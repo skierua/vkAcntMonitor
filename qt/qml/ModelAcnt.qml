@@ -33,7 +33,7 @@ ListModel {
     signal vkEvent(string id, var param)
 
     function load() {
-        Lib.postRequest(root.uri, {"reqid":"sse"},
+        Lib.postRequest(root.uri, {"reqid":"selall"},
                         (err,resp) => {
                              if (err === null){
                                  // console.log("#278 main "+JSON.stringify(resp))

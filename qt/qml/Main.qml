@@ -8,7 +8,7 @@ import "../../lib.js" as Lib
 
 ApplicationWindow {
     id: root
-    title: "Balance "+String("#6.0")
+    title: "Balance "+String("#6.1")
     visible: true
     width: 0  //  /*640*/; onWidthChanged: geometryTimer.start()   //if (!geometryTimer.running) {geometryTimer.start()}
     height: 0 //  /*480*/; onHeightChanged: geometryTimer.start()  //if (!geometryTimer.running) {geometryTimer.start()}
@@ -113,7 +113,7 @@ ApplicationWindow {
         header: ToolBar{
             anchors.margins: 5
             RowLayout {
-                width:parent.width-5
+                width:parent.width-10
                 ToolButton {
                     id:btnNaviMenu
                     text: "☰"
@@ -194,123 +194,135 @@ ApplicationWindow {
             }
 
         }
-
-        ColumnLayout{
-            anchors{fill: parent; margins: 2}
-            spacing: 2
-            Rectangle{
-                id: settingsArea
-                visible: false
-                Layout.preferredHeight: childrenRect.height +10
-                Layout.fillWidth: true
-                // radius: 10
-                // color:"PowderBlue"
-                ColumnLayout {
-                    // width: parent.width
-                    anchors.centerIn: parent
-                    RowLayout {
-                        spacing: 10
-                        Label{
-        //                    minimumPixelSize: 100
-                            text: "Login:"
-                        }
-                        TextField{
-                            id: editLogin
-                            // Layout.fillWidth: true
-                            placeholderText: "login user"
-                            text: root.restuser
-                            onEditingFinished: root.restuser = text
-                        }
-                    }
-                    RowLayout {
-                        spacing: 10
-                        Label{
-                            minimumPixelSize: 100
-                            text: "password:"
-                        }
-                        TextField{
-                            id: editPassword
-                            // Layout.fillWidth: true
-                            echoMode: TextInput.Password
-                            placeholderText: "password"
-                            text: root.restpassword
-                            onEditingFinished: root.restpassword = text
-                        }
-                    }
-                    RowLayout {
-                        spacing: 10
-                        Label{ text: "host:" }
-                        TextField{
-                            id: editUrl
-                            // Layout.fillWidth: true
-                            placeholderText: "host url"
-                            text: root.resthost
-                            onEditingFinished: root.resthost = text
-                        }
-                    }
-                    RowLayout {
-                        spacing: 10
-                        Label{
-        //                    minimumPixelSize: 100
-                            text: "api:"
-                        }
-                        TextField{
-                            id: editApi
-                            placeholderText: "api"
-                            text: root.restapi
-                            onEditingFinished: root.restapi = text
-                        }
-                    }
-                    RowLayout {
-                        spacing: 10
-                        Button{
-                            id:settingOk
-                            text: "Ok"
-                            onClicked: {
-                                actionLogin.trigger()
-                                settingsArea.visible = false
+        Pane{
+            anchors.fill: parent
+            ColumnLayout{
+                anchors{fill: parent; margins: 2}
+                spacing: 2
+                Rectangle{
+                    id: settingsArea
+                    visible: false
+                    Layout.preferredHeight: childrenRect.height +10
+                    Layout.fillWidth: true
+                    // radius: 10
+                    // color:"PowderBlue"
+                    ColumnLayout {
+                        // width: parent.width
+                        anchors.centerIn: parent
+                        RowLayout {
+                            spacing: 10
+                            Label{
+            //                    minimumPixelSize: 100
+                                text: "Login:"
+                            }
+                            TextField{
+                                id: editLogin
+                                // Layout.fillWidth: true
+                                placeholderText: "login user"
+                                text: root.restuser
+                                onEditingFinished: root.restuser = text
                             }
                         }
-                        Button{
-                            id:settingCancel
-                            text: "Cancel"
-                            onClicked: settingsArea.visible = false
+                        RowLayout {
+                            spacing: 10
+                            Label{
+                                minimumPixelSize: 100
+                                text: "password:"
+                            }
+                            TextField{
+                                id: editPassword
+                                // Layout.fillWidth: true
+                                echoMode: TextInput.Password
+                                placeholderText: "password"
+                                text: root.restpassword
+                                onEditingFinished: root.restpassword = text
+                            }
+                        }
+                        RowLayout {
+                            spacing: 10
+                            Label{ text: "host:" }
+                            TextField{
+                                id: editUrl
+                                // Layout.fillWidth: true
+                                placeholderText: "host url"
+                                text: root.resthost
+                                onEditingFinished: root.resthost = text
+                            }
+                        }
+                        RowLayout {
+                            spacing: 10
+                            Label{
+            //                    minimumPixelSize: 100
+                                text: "api:"
+                            }
+                            TextField{
+                                id: editApi
+                                placeholderText: "api"
+                                text: root.restapi
+                                onEditingFinished: root.restapi = text
+                            }
+                        }
+                        RowLayout {
+                            spacing: 10
+                            Button{
+                                id:settingOk
+                                text: "Ok"
+                                onClicked: {
+                                    actionLogin.trigger()
+                                    settingsArea.visible = false
+                                }
+                            }
+                            Button{
+                                id:settingCancel
+                                text: "Cancel"
+                                onClicked: settingsArea.visible = false
+                            }
                         }
                     }
                 }
-            }
 
-            VkAcntAmnt{
-                id: acntAmnt
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                acntModel: acntData
-                onVkEvent: (id, param) => {
-                    if (id === 'log'){
-                        logView.append("[VkAcntAmnt] " + param.text, 2)
-                    } else if (id === 'loadDcms') {
-                        documWindowLoader.active = true
-                        documWindowLoader.item.queryData = param
-                    } else {
-                        logView.append("[VkAcntAmnt.qml] BAD event !!!", 1)
+                VkAcntAmnt{
+                    id: acntAmnt
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    acntModel: acntData
+                    onVkEvent: (id, param) => {
+                        if (id === 'log'){
+                            logView.append("[VkAcntAmnt] " + param.text, 2)
+                        } else if (id === 'loadDcms') {
+                            documWindowLoader.active = true
+                            documWindowLoader.item.queryData = param
+                        } else {
+                            logView.append("[VkAcntAmnt.qml] BAD event !!!", 1)
+                        }
+
                     }
-
+                }
+                LogView{
+                    id: logView
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: count * 25
+                    Layout.maximumHeight: parent.height / 3
                 }
             }
-            LogView{
-                id: logView
-                Layout.fillWidth: true
-                Layout.preferredHeight: count * 25
-                Layout.maximumHeight: parent.height / 3
-            }
-        }
 
+        }
 
     }
 
-    footer: Label {
-        text: String(" %1.%2 ").arg(restuser).arg(resthost)
-        background: Rectangle{color: 'whitesmoke'}
+    footer:  Rectangle{
+        width: parent.width
+        height: 30      //childrenRect.height
+        color: 'whitesmoke'
+        RowLayout{
+            anchors{fill: parent; margins: 5}
+            Text {
+                text: String(" %1.%2 ").arg(restuser).arg(resthost)
+                // background: Rectangle{color: 'whitesmoke'}
+            }
+
+        }
+
     }
 
     onClosing: {

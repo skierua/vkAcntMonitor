@@ -17,8 +17,13 @@ ListModel {
 
     signal vkEvent(string id, var param)
 
+    function dbg(str, code ="") {
+        console.log( String("%1[ModelDcms] %2").arg(code).arg(str));
+    }
+
     function load() {
         // vkEvent("log","load() " + JSON.stringify(root.queryData.req));
+        dbg(JSON.stringify(root.queryData), "#q6g")
         Lib.postRequest(root.uri, root.queryData.req,
                         (err,resp) => {
                              if (err === null){
@@ -36,6 +41,23 @@ ListModel {
         });
     }
 
+    function isAllowed(row, flt){
+        return ( ~(((data[row].note).toLowerCase()).indexOf(flt.toLowerCase()))
+                || ~(((data[row].atclcode).toLowerCase()).indexOf(flt.toLowerCase()))
+                || ~(((data[row].bcode).toLowerCase()).indexOf(flt.toLowerCase()))
+                || ~(((data[row].dcmcode).toLowerCase()).indexOf(flt.toLowerCase()))
+                || ~(((data[row].cdt).toLowerCase()).indexOf(flt.toLowerCase()))
+                || ~(((data[row].dbt).toLowerCase()).indexOf(flt.toLowerCase()))
+                || (Number(flt)!==0 && ~((data[row].amnt).indexOf(flt)))
+                || (Number(flt)!==0 && ~((data[row].bamnt).indexOf(flt)))
+                || (Number(flt)!==0 && Number(data[row].amnt)===Number(flt)) )
+    }
+
+    function acntFilter (row){
+        return (!acntOnly || ((root.queryData.acnt === "3000" ? true : root.queryData.acnt === data[row].cdt)
+                && (root.queryData.cur === data[row].atclcode)))
+    }
+
     function filterData(flt =""){
         // vkEvent("log","data : " + JSON.stringify(root.data));
         let tmpa = []
@@ -48,17 +70,7 @@ ListModel {
             //     pid = data[r].pid
             //     ++count
             // }
-            if ( (!acntOnly || (root.queryData.acnt === data[r].cdt && root.queryData.cur === data[r].atclcode))
-                    && ((flt === undefined) || (flt === '')
-                    || ~(((data[r].note).toLowerCase()).indexOf(flt.toLowerCase()))
-                    || ~(((data[r].atclcode).toLowerCase()).indexOf(flt.toLowerCase()))
-                    || ~(((data[r].bcode).toLowerCase()).indexOf(flt.toLowerCase()))
-                    || ~(((data[r].dcmcode).toLowerCase()).indexOf(flt.toLowerCase()))
-                    || ~(((data[r].cdt).toLowerCase()).indexOf(flt.toLowerCase()))
-                    || ~(((data[r].dbt).toLowerCase()).indexOf(flt.toLowerCase()))
-                    || (Number(flt)!==0 && ~((data[r].amnt).indexOf(flt)))
-                    || (Number(flt)!==0 && ~((data[r].bamnt).indexOf(flt)))
-                    || (Number(flt)!==0 && Number(data[r].amnt)===Number(flt)))) {
+            if ( acntFilter(r) && ((flt === undefined) || (flt === '') || isAllowed(r, flt))) {
                 if (fpid !== data[r].pid) {
                     fpid = data[r].pid
                     if (fcount % pageCapacity === 0 ) tmpa.push(r);
@@ -134,12 +146,12 @@ ListModel {
         return res.toFixed(4) + (coef != 1 ? ("/" + String(coef)) : "")
     }
 
-    function rateCoef(vcrn) {
-        if (vcrn === 'RUB' || vcrn === '643'
-                || vcrn === 'JPY'|| vcrn === '392') { return 10 }
-        if (vcrn === 'HUF' || vcrn === '348') { return 100 }
-        return 1;
-    }
+    // function rateCoef(vcrn) {
+    //     if (vcrn === 'RUB' || vcrn === '643'
+    //             || vcrn === 'JPY'|| vcrn === '392') { return 10 }
+    //     if (vcrn === 'HUF' || vcrn === '348') { return 100 }
+    //     return 1;
+    // }
 
     function bindInfo(vid){
         // vkEvent("log", "bindInfo vid="+vid)

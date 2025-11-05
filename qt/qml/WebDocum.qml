@@ -6,7 +6,7 @@ import "../../lib.js" as Lib
 
 Window {
    id: root
-    width: 300
+    width: 360
     height: 480
     property string uri
     property var queryData      // stru
@@ -61,8 +61,8 @@ Window {
                 //          : (index%2 == 0 ?  Qt.darker('white',1.01) : 'white');
                 Row{
                     id: rootLayout
-                   anchors.fill: parent
-                   spacing: 2
+                    anchors.fill: parent
+                    spacing: 2
                     // width: parent.width
                     Label{
                         width: 0.05*parent.width;
@@ -71,10 +71,10 @@ Window {
                     }
 
                     Column{           // name
-                        width: 0.4*parent.width-2;
+                        width: 0.35*parent.width-2;
                         spacing: 2
                         clip:true
-                        Label {
+                        Text {
 //                            Layout.fillWidth: true
                             clip: true
 //                            text: note
@@ -92,18 +92,18 @@ Window {
                         }
                         Row{
                             spacing: 2
-                            Label {
+                            Text {
     //                            clip: true
                                 text: dcmcode
                                 font.pointSize: 10
                                 color: 'gray'
                             }
-                            Label{
+                            Text{
                                 text: '['+cdt+'.'+(atclcode==''?'980':atclcode)+']'
                                 font.pointSize: 10
                                 color: 'gray'
                             }
-                            Label {
+                            Text {
     //                            Layout.fillWidth: true
                                 clip: true
                                 text: subnote
@@ -112,45 +112,51 @@ Window {
                             }
                         }
                     }
-
-                    Column{     // price, eq,...
-//                        anchors.fill: parent
+                    Item{     // price, eq,...
                         width: 0.2*parent.width-2;
-                        spacing: 2
-//                            clip: true
-                        visible: isTrade
-                        Label {
-                            text: price
-                        }
-                        Row{
+                        height: parent.height
+                        Column{
+                           anchors.fill: parent
                             spacing: 2
-//                            anchors.horizontalCenter: parent.horizontalCenter
-                            Label {
-                                text: Math.abs(eq).toLocaleString(Qt.locale(),'f',2)
-                                font.pointSize: 10
-                                color: 'gray'
+    //                            clip: true
+                            visible: isTrade
+                            Text {
+                                text: price
                             }
-                            Label {
-                                text:dsc === 0 ?'' : ('D:' + dsc.toLocaleString(Qt.locale(),'f',2))
-                                font.pointSize: 10
-                                color: 'gray'
-                            }
-                            Label {
-                                text:bns === 0 ? '' : ('B:' + bns.toLocaleString(Qt.locale(),'f',2))
-                                font.pointSize: 10
-                                color: 'gray'
+                            Row{
+                                spacing: 2
+    //                            anchors.horizontalCenter: parent.horizontalCenter
+                                Text {
+                                    text: Math.abs(eq).toLocaleString(Qt.locale(),'f',2)
+                                    font.pointSize: 10
+                                    color: 'gray'
+                                }
+                                Text {
+                                    text:dsc === 0 ?'' : ('D:' + dsc.toLocaleString(Qt.locale(),'f',2))
+                                    font.pointSize: 10
+                                    color: 'gray'
+                                }
+                                Text {
+                                    text:bns === 0 ? '' : ('B:' + bns.toLocaleString(Qt.locale(),'f',2))
+                                    font.pointSize: 10
+                                    color: 'gray'
+                                }
                             }
                         }
+
                     }
-                    Label {     // amnt
-                        width: isTrade ? 0.2*parent.width-2 : 0.4*parent.width-4;
+
+                    Text {     // amnt
+                        width: 0.2*parent.width-2;
+                        // width: isTrade ? 0.2*parent.width-2 : 0.4*parent.width-4;
                         anchors.verticalCenter: parent.verticalCenter;
                         horizontalAlignment: Text.AlignRight
+                        font.pointSize: 14
                         text: Math.abs(amnt).toLocaleString(Qt.locale(),'f',0)
                     }
 
-                    Label{
-                        width: 0.15*parent.width-2;
+                    Text{
+                        width: 0.2*parent.width-2;
                         anchors.verticalCenter: parent.verticalCenter
                         horizontalAlignment: Text.AlignRight
                         text: Lib.humanDate(tm)
@@ -192,8 +198,7 @@ Window {
 
         header: ToolBar{
             RowLayout {
-                anchors.fill: parent
-                anchors.verticalCenter: parent.verticalCenter
+                anchors{fill: parent; verticalCenter: parent.verticalCenter; margins: 5}
                 Label {
                     id: pageTitleLbl
                     // text: dataModel.shop
@@ -251,7 +256,7 @@ Window {
                 ScrollBar.vertical: ScrollBar{
                     parent: vw.parent
                     anchors.top: vw.top
-                    anchors.right: vw.right
+                    anchors.left: vw.right
                     anchors.bottom: vw.bottom
                 }
                 section.property: ""
@@ -295,34 +300,39 @@ Window {
                 anchors{fill: parent;leftMargin:5; rightMargin:5;}
                 TextField{
                     id: vfilterEdit
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 70
+                    placeholderText: "filter"
 //                    focus: true
                     selectByMouse: true
                     onActiveFocusChanged: if (activeFocus) {selectAll()}
                     horizontalAlignment: Text.AlignHCenter
                     onAccepted: {
                         vw.model.filterData(text)
+                        vcrntEdit.text = 1
                     }
                 }
                 Item{
                     Layout.fillWidth: true
                 }
-                ToolButton{ action: previousAction; }
-                TextField{
-                    id: vcrntEdit
-                    Layout.preferredWidth: 50
-//                    focus: true
-                    selectByMouse: true
-                    validator: IntValidator { bottom: 1; }
-                    onActiveFocusChanged: if (activeFocus) { selectAll(); }
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "1"
-                    onTextChanged: {
-                        if (Number(text) > vw.model.pager.length ) text = vw.model.pager.length
-                        vw.model.populate(text)
+                RowLayout{
+                    ToolButton{ action: previousAction; }
+                    TextField{
+                        id: vcrntEdit
+                        Layout.preferredWidth: 50
+    //                    focus: true
+                        selectByMouse: true
+                        validator: IntValidator { bottom: 1; }
+                        onActiveFocusChanged: if (activeFocus) { selectAll(); }
+                        horizontalAlignment: Text.AlignHCenter
+                        text: "1"
+                        onTextChanged: {
+                            if (Number(text) > vw.model.pager.length ) text = vw.model.pager.length
+                            vw.model.populate(text)
+                        }
                     }
+                    ToolButton{ action: nextAction; }
                 }
-                ToolButton{ action: nextAction; }
+
 
                 Label{
                     id: footerCount
