@@ -1,15 +1,14 @@
 # vkAcntMonitor
 
-#productiion
-/build/
-
 # misc
-/.CMakeLists.txt.user
-/.DS_Store
-qt/.DS_Store
-qt/qml/.DS_Store
+.DS_Store
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+/bu/
+/build/
+*.user
+*.user.*
